@@ -2,7 +2,6 @@ import Phaser from "phaser";
 
 import playBallPopEffect from "../effects/playBallPopEffect.js";
 import playScoreRewardEffect from "../effects/playScoreRewardEffect.js";
-import playLevelCompleteEffect from "../effects/playLevelCompleteEffect.js";
 
 export default class EasyGameScene extends Phaser.Scene {
   constructor() {
@@ -13,25 +12,25 @@ export default class EasyGameScene extends Phaser.Scene {
     this.level = data?.level ?? 1;
     this.score = data?.score ?? 0;
     this.missed = data?.missed ?? 0;
-    this.vowelsCollected = 0;
     this.levelCompleting = false;
     this.gameOver = false;
 
     ////////timer/////
 
-    this.timeLimit = 10;
+    this.timeLimit = 120;
     this.timeLeft = this.timeLimit;
     this.timerEvent = null;
+    this.dropSpawnEvent = null;
   }
 
   create() {
     this.createBackground();
     this.createHUD();
     this.createRabbit();
-    this.createRaindrops();
-    this.startTimer();
-
     this.createBallPopEmitter();
+    this.createRaindrops();
+    this.startDropSpawner();
+    this.startTimer();
 
     this.audioManager = this.registry.get("audioManager");
 
@@ -157,6 +156,12 @@ export default class EasyGameScene extends Phaser.Scene {
       this.timerEvent.remove();
 
       this.timerEvent = null;
+    }
+
+    if (this.dropSpawnEvent) {
+      this.dropSpawnEvent.remove();
+
+      this.dropSpawnEvent = null;
     }
   }
 
@@ -284,8 +289,21 @@ export default class EasyGameScene extends Phaser.Scene {
   createRaindrops() {
     const drops = this.getLevelDrops();
 
-    drops.forEach((drop, index) => {
+    drops.slice(0, 4).forEach((drop, index) => {
       this.createRaindrop(drop, index);
+    });
+  }
+
+  startDropSpawner() {
+    this.dropSpawnEvent = this.time.addEvent({
+      delay: 1500,
+      loop: true,
+      callback: () => {
+        if (!this.gameOver && !this.levelCompleting) {
+          const drop = Phaser.Utils.Array.GetRandom(this.getLevelDrops());
+          this.createRaindrop(drop, 0);
+        }
+      },
     });
   }
 
@@ -338,7 +356,7 @@ export default class EasyGameScene extends Phaser.Scene {
   }
 
   createRaindrop(dropData, index) {
-    const position = this.getDropPosition(index);
+    const position = this.getDropPosition();
 
     const container = this.add.container(position.x, position.y);
 
@@ -371,45 +389,35 @@ export default class EasyGameScene extends Phaser.Scene {
 
     container.on("pointerdown", () => this.onRaindropClicked(container));
 
-    this.addDropAnimation(container);
+    this.addDropAnimation(container, index);
   }
 
-  getDropPosition(index) {
-    const positions = [
-      { x: 160, y: 430 },
-      { x: 410, y: 450 },
-      { x: 680, y: 450 },
-      { x: 920, y: 440 },
+  getDropPosition() {
+    const margin = 100;
 
-      { x: 250, y: 750 },
-      { x: 530, y: 800 },
-      { x: 800, y: 770 },
-
-      { x: 150, y: 1100 },
-      { x: 450, y: 1100 },
-      { x: 760, y: 1150 },
-    ];
-
-    return positions[index];
+    return {
+      x: Phaser.Math.Between(margin, this.scale.width - margin),
+      y: Phaser.Math.Between(-260, -80),
+    };
   }
 
-  addDropAnimation(drop) {
+  addDropAnimation(drop, index) {
+    const groundY = this.scale.height - 220;
+    const landingY = groundY - drop.height / 2;
+
     this.tweens.add({
       targets: drop,
-      y: drop.y + 40,
-      duration: 1200,
-      yoyo: true,
-      repeat: -1,
-      ease: "Sine.easeInOut",
+      y: landingY,
+      duration: Phaser.Math.Between(7000, 9000),
+      delay: index * 450,
+      ease: "Linear",
+      onComplete: () => this.handleMissedDrop(drop, groundY),
     });
 
     this.tweens.add({
       targets: drop,
-      angle: {
-        from: -5,
-        to: 5,
-      },
-      duration: 1400,
+      angle: Phaser.Math.Between(-8, 8),
+      duration: 900,
       yoyo: true,
       repeat: -1,
       ease: "Sine.easeInOut",
@@ -445,24 +453,58 @@ export default class EasyGameScene extends Phaser.Scene {
     }
   }
 
+  handleMissedDrop(drop, groundY) {
+    if (!drop.active || this.gameOver || this.levelCompleting) {
+      return;
+    }
+
+    drop.active = false;
+    drop.y = groundY - drop.height / 2;
+
+    this.tweens.add({
+      targets: drop,
+      y: drop.y - 28,
+      duration: 110,
+      yoyo: true,
+      ease: "Sine.easeOut",
+      onComplete: () => this.burstMissedDrop(drop, groundY),
+    });
+  }
+
+  burstMissedDrop(drop, groundY) {
+    playBallPopEffect(this, drop.x, groundY, 20);
+
+    const burst = this.add.circle(drop.x, groundY, 24, 0xffffff, 0);
+    burst.setStrokeStyle(8, 0xffffff, 0.9).setDepth(9);
+
+    this.tweens.add({
+      targets: burst,
+      scale: 2.2,
+      alpha: 0,
+      duration: 300,
+      ease: "Cubic.easeOut",
+      onComplete: () => burst.destroy(),
+    });
+
+    this.tweens.killTweensOf(drop);
+    this.tweens.add({
+      targets: drop,
+      scale: 1.35,
+      alpha: 0,
+      duration: 220,
+      ease: "Back.easeIn",
+      onComplete: () => drop.destroy(),
+    });
+  }
+
   handleCorrectDrop(drop) {
-    this.vowelsCollected++;
     this.audioManager.playPop();
 
-    playScoreRewardEffect(
-      this,
-      drop.x,
-      drop.y,
-      10,
-      () => {
-        this.score += 1;
+    playScoreRewardEffect(this, drop.x, drop.y, 10, () => {
+      this.score += 1;
 
-        this.scoreText.setText(`${this.score}`);
-      },
-      () => {
-        this.checkLevelComplete();
-      },
-    );
+      this.scoreText.setText(`${this.score}`);
+    });
 
     this.showCorrectFeedback(drop);
 
@@ -493,7 +535,7 @@ export default class EasyGameScene extends Phaser.Scene {
   }
 
   handleMissedLimit() {
-    if (this.levelCompleting || this.gameOver) {
+    if (this.missed < 10 || this.levelCompleting || this.gameOver) {
       return;
     }
 
@@ -588,50 +630,6 @@ export default class EasyGameScene extends Phaser.Scene {
     });
 
     this.cameras.main.shake(120, 0.003);
-  }
-
-  checkLevelComplete() {
-    if (this.vowelsCollected !== 5 || this.levelCompleting) {
-      return;
-    }
-
-    this.levelCompleting = true;
-
-    this.stopTimer();
-
-    console.log(`Level ${this.level} completed!`);
-
-    this.input.enabled = false;
-
-    this.showLevelComplete();
-  }
-
-  showLevelComplete() {
-    this.input.enabled = false;
-
-    playLevelCompleteEffect(this, this.level, () => {
-      this.goToNextLevel();
-    });
-  }
-
-  goToNextLevel() {
-    if (this.level >= 10) {
-      this.scene.start("GameOverScene", {
-        score: this.score,
-        missed: this.missed,
-        level: this.level,
-        won: true,
-        reason: "completed",
-      });
-
-      return;
-    }
-
-    this.scene.start("EasyGameScene", {
-      level: this.level + 1,
-      score: this.score,
-      missed: this.missed,
-    });
   }
 
   createBallPopEmitter() {

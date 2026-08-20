@@ -7,9 +7,9 @@ export default class GameOverScene extends Phaser.Scene {
 
   init(data) {
     this.score = data?.score ?? 0;
-    this.level = data?.level ?? 1;
     this.won = data?.won ?? false;
     this.missed = data?.missed ?? 0;
+    this.reason = data?.reason ?? "time";
   }
 
   create() {
@@ -139,7 +139,7 @@ export default class GameOverScene extends Phaser.Scene {
     this.levelText = this.add.text(
       this.scale.width / 2,
       950,
-      this.won ? "All 10 levels completed!" : `Reached Level ${this.level}`,
+      this.reason === "time" ? "120 SECOND RUN COMPLETE!" : "RUN FINISHED!",
       {
         fontFamily: "Fredoka",
         fontSize: "30px",
@@ -214,23 +214,23 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   calculateStars() {
-    if (this.won) {
+    if (this.missed === 0) {
       return 5;
     }
 
-    if (this.level >= 8) {
+    if (this.missed <= 2) {
       return 4;
     }
 
-    if (this.level >= 6) {
+    if (this.missed <= 4) {
       return 3;
     }
 
-    if (this.level >= 4) {
+    if (this.missed <= 6) {
       return 2;
     }
 
-    if (this.level >= 2) {
+    if (this.missed <= 8) {
       return 1;
     }
 
