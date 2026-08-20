@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import { createBackground } from "../utils/helper";
 
+const assetPath = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 export default class PreloaderScene extends Phaser.Scene {
   constructor() {
     super("PreloaderScene");
@@ -128,116 +130,116 @@ export default class PreloaderScene extends Phaser.Scene {
     //-----------------------------------
 
     // Backgrounds
-    this.load.image("playBtn", "/Assets/Images/PreloaderScene/Start.png");
+    this.load.image("playBtn", assetPath("Assets/Images/PreloaderScene/Start.png"));
     this.load.image(
       "gameInctructions",
-      "/Assets/Images/PreloaderScene/Howtoplay.png",
+      assetPath("Assets/Images/PreloaderScene/Howtoplay.png"),
     );
 
-    this.load.image("bunny", "/Assets/Images/PreloaderScene/Rabbit.png");
+    this.load.image("bunny", assetPath("Assets/Images/PreloaderScene/Rabbit.png"));
 
     // ==========================================
     // EASY GAME SCENE ASSETS
     // ==========================================
 
-    this.load.image("dropBlue", "Assets/Images/gameScene/blue.png");
+    this.load.image("dropBlue", assetPath("Assets/Images/gameScene/blue.png"));
 
-    this.load.image("dropGolden", "Assets/Images/gameScene/golden.png");
+    this.load.image("dropGolden", assetPath("Assets/Images/gameScene/golden.png"));
 
-    this.load.image("dropGreen", "Assets/Images/gameScene/green.png");
+    this.load.image("dropGreen", assetPath("Assets/Images/gameScene/green.png"));
 
-    this.load.image("dropLightBlue", "Assets/Images/gameScene/lightBlue.png");
+    this.load.image("dropLightBlue", assetPath("Assets/Images/gameScene/lightBlue.png"));
 
-    this.load.image("dropLightGreen", "Assets/Images/gameScene/lightGreen.png");
+    this.load.image("dropLightGreen", assetPath("Assets/Images/gameScene/lightGreen.png"));
 
-    this.load.image("dropPink", "Assets/Images/gameScene/pink.png");
+    this.load.image("dropPink", assetPath("Assets/Images/gameScene/pink.png"));
 
-    this.load.image("dropPurple", "Assets/Images/gameScene/purple.png");
+    this.load.image("dropPurple", assetPath("Assets/Images/gameScene/purple.png"));
 
-    this.load.image("dropRed", "Assets/Images/gameScene/red+.png");
+    this.load.image("dropRed", assetPath("Assets/Images/gameScene/red+.png"));
 
-    this.load.image("dropSkyBlue", "Assets/Images/gameScene/skyBlue.png");
+    this.load.image("dropSkyBlue", assetPath("Assets/Images/gameScene/skyBlue.png"));
 
-    this.load.image("dropYellow", "Assets/Images/gameScene/yellow.png");
+    this.load.image("dropYellow", assetPath("Assets/Images/gameScene/yellow.png"));
 
     // ==========================================
     // GAME UI
     // ==========================================
 
-    this.load.image("scorePanel", "Assets/Images/gameScene/Score.png");
+    this.load.image("scorePanel", assetPath("Assets/Images/gameScene/Score.png"));
 
-    this.load.image("missedPanel", "Assets/Images/gameScene/Missed.png");
+    this.load.image("missedPanel", assetPath("Assets/Images/gameScene/Missed.png"));
 
     // ==========================================
     // CHARACTER
     // ==========================================
 
-    this.load.image("playRabbit", "Assets/Images/gameScene/Play Rabbit.png");
+    this.load.image("playRabbit", assetPath("Assets/Images/gameScene/Play Rabbit.png"));
 
     // ==========================================
     // GAME OVER SCENE
     // ==========================================
 
-    this.load.image("gameOverPopup", "/Assets/Images/gameOverScene/popup.png");
+    this.load.image("gameOverPopup", assetPath("Assets/Images/gameOverScene/popup.png"));
 
-    this.load.image("gameOverHome", "/Assets/Images/gameOverScene/home.png");
+    this.load.image("gameOverHome", assetPath("Assets/Images/gameOverScene/home.png"));
 
     this.load.image(
       "missedIcon",
-      "/Assets/Images/gameOverScene/MissedVowels.png",
+      assetPath("Assets/Images/gameOverScene/MissedVowels.png"),
     );
 
     this.load.image(
       "gameOverPlayAgain",
-      "/Assets/Images/gameOverScene/PlayAgain.png",
+      assetPath("Assets/Images/gameOverScene/PlayAgain.png"),
     );
 
     this.load.image(
       "gameOverRabbit",
-      "/Assets/Images/gameOverScene/Rabbit.png",
+      assetPath("Assets/Images/gameOverScene/Rabbit.png"),
     );
 
-    this.load.image("gameOverStar", "/Assets/Images/gameOverScene/Star.png");
+    this.load.image("gameOverStar", assetPath("Assets/Images/gameOverScene/Star.png"));
 
     this.load.image(
       "gameOverStarEmpty",
-      "/Assets/Images/gameOverScene/Star2.png",
+      assetPath("Assets/Images/gameOverScene/Star2.png"),
     );
 
     this.load.image(
       "gameOverScoreLabel",
-      "/Assets/Images/gameOverScene/Yourscore.png",
+      assetPath("Assets/Images/gameOverScene/Yourscore.png"),
     );
 
     this.load.image(
       "gameOverOverlay",
-      "/Assets/Images/gameOverScene/overlay.png",
+      assetPath("Assets/Images/gameOverScene/overlay.png"),
     );
 
     this.load.atlas(
       "flares",
-      "/Assets/Particles/flares.png",
-      "/Assets/Particles/flares.json",
+      assetPath("Assets/Particles/flares.png"),
+      assetPath("Assets/Particles/flares.json"),
     );
 
     ///////////audio//////////////
 
-    this.load.audio("gameplayMusic", "/Assets/Audio/bgSound.mp3");
-    this.load.audio("buttonClickSound", "/Assets/Audio/buttonClickSound.mp3");
-    this.load.audio("gameOverSound", "/Assets/Audio/gameOverSound.mp3");
+    this.load.audio("gameplayMusic", assetPath("Assets/Audio/bgSound.mp3"));
+    this.load.audio("buttonClickSound", assetPath("Assets/Audio/buttonClickSound.mp3"));
+    this.load.audio("gameOverSound", assetPath("Assets/Audio/gameOverSound.mp3"));
     this.load.audio(
       "wrongSelectionSound",
-      "/Assets/Audio/wrongSelectionSound.mp3",
+      assetPath("Assets/Audio/wrongSelectionSound.mp3"),
     );
-    this.load.audio("popSound", "/Assets/Audio/popSound.mp3");
+    this.load.audio("popSound", assetPath("Assets/Audio/popSound.mp3"));
     this.load.audio(
       "clockSound",
-      "/Assets/Audio/clock-tick-single-gfx-sound.mp3",
+      assetPath("Assets/Audio/clock-tick-single-gfx-sound.mp3"),
     );
 
     this.load.audio(
       "starCollectionSound",
-      "/Assets/Audio/starCollectionSound.mp3",
+      assetPath("Assets/Audio/starCollectionSound.mp3"),
     );
 
     //-----------------------------------
