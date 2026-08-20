@@ -19,7 +19,7 @@ export default class EasyGameScene extends Phaser.Scene {
 
     ////////timer/////
 
-    this.timeLimit = 30;
+    this.timeLimit = 10;
     this.timeLeft = this.timeLimit;
     this.timerEvent = null;
   }

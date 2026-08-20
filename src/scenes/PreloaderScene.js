@@ -132,61 +132,61 @@ export default class PreloaderScene extends Phaser.Scene {
     // Backgrounds
     this.load.image(
       "playBtn",
-      assetPath("Assets/Images/PreloaderScene/Start.png"),
+      assetPath("Assets/Images/PreloaderScene/Start.avif"),
     );
     this.load.image(
       "gameInctructions",
-      assetPath("Assets/Images/PreloaderScene/Howtoplay.png"),
+      assetPath("Assets/Images/PreloaderScene/Howtoplay.avif"),
     );
 
     this.load.image(
       "bunny",
-      assetPath("Assets/Images/PreloaderScene/Rabbit.png"),
+      assetPath("Assets/Images/PreloaderScene/Rabbit.avif"),
     );
 
     // ==========================================
     // EASY GAME SCENE ASSETS
     // ==========================================
 
-    this.load.image("dropBlue", assetPath("Assets/Images/gameScene/blue.png"));
+    this.load.image("dropBlue", assetPath("Assets/Images/gameScene/blue.avif"));
 
     this.load.image(
       "dropGolden",
-      assetPath("Assets/Images/gameScene/golden.png"),
+      assetPath("Assets/Images/gameScene/golden.avif"),
     );
 
     this.load.image(
       "dropGreen",
-      assetPath("Assets/Images/gameScene/green.png"),
+      assetPath("Assets/Images/gameScene/green.avif"),
     );
 
     this.load.image(
       "dropLightBlue",
-      assetPath("Assets/Images/gameScene/lightBlue.png"),
+      assetPath("Assets/Images/gameScene/lightBlue.avif"),
     );
 
     this.load.image(
       "dropLightGreen",
-      assetPath("Assets/Images/gameScene/lightGreen.png"),
+      assetPath("Assets/Images/gameScene/lightGreen.avif"),
     );
 
-    this.load.image("dropPink", assetPath("Assets/Images/gameScene/pink.png"));
+    this.load.image("dropPink", assetPath("Assets/Images/gameScene/pink.avif"));
 
     this.load.image(
       "dropPurple",
-      assetPath("Assets/Images/gameScene/purple.png"),
+      assetPath("Assets/Images/gameScene/purple.avif"),
     );
 
-    this.load.image("dropRed", assetPath("Assets/Images/gameScene/red+.png"));
+    this.load.image("dropRed", assetPath("Assets/Images/gameScene/red+.avif"));
 
     this.load.image(
       "dropSkyBlue",
-      assetPath("Assets/Images/gameScene/skyBlue.png"),
+      assetPath("Assets/Images/gameScene/skyBlue.avif"),
     );
 
     this.load.image(
       "dropYellow",
-      assetPath("Assets/Images/gameScene/yellow.png"),
+      assetPath("Assets/Images/gameScene/yellow.avif"),
     );
 
     // ==========================================
@@ -195,12 +195,12 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.image(
       "scorePanel",
-      assetPath("Assets/Images/gameScene/Score.png"),
+      assetPath("Assets/Images/gameScene/Score.avif"),
     );
 
     this.load.image(
       "missedPanel",
-      assetPath("Assets/Images/gameScene/Missed.png"),
+      assetPath("Assets/Images/gameScene/Missed.avif"),
     );
 
     // ==========================================
@@ -209,7 +209,7 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.image(
       "playRabbit",
-      assetPath("Assets/Images/gameScene/Play Rabbit.png"),
+      assetPath("Assets/Images/gameScene/Play Rabbit.avif"),
     );
 
     // ==========================================
@@ -218,42 +218,42 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.load.image(
       "gameOverPopup",
-      assetPath("Assets/Images/gameOverScene/popup.png"),
+      assetPath("Assets/Images/gameOverScene/popup.avif"),
     );
 
     this.load.image(
       "gameOverHome",
-      assetPath("Assets/Images/gameOverScene/home.png"),
+      assetPath("Assets/Images/gameOverScene/home.avif"),
     );
 
     this.load.image(
       "missedIcon",
-      assetPath("Assets/Images/gameOverScene/MissedVowels.png"),
+      assetPath("Assets/Images/gameOverScene/MissedVowels.avif"),
     );
 
     this.load.image(
       "gameOverPlayAgain",
-      assetPath("Assets/Images/gameOverScene/PlayAgain.png"),
+      assetPath("Assets/Images/gameOverScene/PlayAgain.avif"),
     );
 
     this.load.image(
       "gameOverRabbit",
-      assetPath("Assets/Images/gameOverScene/Rabbit.png"),
+      assetPath("Assets/Images/gameOverScene/Rabbit.avif"),
     );
 
     this.load.image(
       "gameOverStar",
-      assetPath("Assets/Images/gameOverScene/Star.png"),
+      assetPath("Assets/Images/gameOverScene/Star.avif"),
     );
 
     this.load.image(
       "gameOverStarEmpty",
-      assetPath("Assets/Images/gameOverScene/Star2.png"),
+      assetPath("Assets/Images/gameOverScene/Star2.avif"),
     );
 
     this.load.image(
       "gameOverScoreLabel",
-      assetPath("Assets/Images/gameOverScene/Yourscore.png"),
+      assetPath("Assets/Images/gameOverScene/Yourscore.avif"),
     );
 
     this.load.image(
@@ -283,10 +283,7 @@ export default class PreloaderScene extends Phaser.Scene {
       assetPath("Assets/Audio/wrongSelectionSound.mp3"),
     );
     this.load.audio("popSound", assetPath("Assets/Audio/popSound.mp3"));
-    this.load.audio(
-      "clockSound",
-      assetPath("Assets/Audio/clock-tick-single-gfx-sound.mp3"),
-    );
+    this.load.audio("clockSound", assetPath("/Assets/Audio/clockTicSound.mp3"));
 
     this.load.audio(
       "starCollectionSound",

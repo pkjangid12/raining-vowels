@@ -28,6 +28,8 @@
 import Phaser from "phaser";
 import AudioManager from "../managers/AudioManager.js";
 
+const assetPath = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 export default class BootScene extends Phaser.Scene {
   constructor() {
     super("BootScene");
@@ -37,11 +39,11 @@ export default class BootScene extends Phaser.Scene {
     // Only assets needed for Preloader Scene
     this.load.image(
       "preload-bg",
-      "/Assets/Images/PreloaderScene/Background.png",
+      assetPath("Assets/Images/PreloaderScene/Background.avif"),
     );
     this.load.image(
       "preload-logo",
-      "/Assets/Images/PreloaderScene/RainingVowels.png",
+      assetPath("Assets/Images/PreloaderScene/RainingVowels.avif"),
     );
   }
 
