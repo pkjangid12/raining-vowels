@@ -17,7 +17,7 @@ export default class EasyGameScene extends Phaser.Scene {
 
     ////////timer/////
 
-    this.timeLimit = 120;
+    this.timeLimit = 1;
     this.timeLeft = this.timeLimit;
     this.timerEvent = null;
     this.dropSpawnEvent = null;
@@ -65,7 +65,7 @@ export default class EasyGameScene extends Phaser.Scene {
   }
 
   createScorePanel() {
-    this.scorePanel = this.add.image(250, 145, "scorePanel");
+    this.scorePanel = this.add.image(250, 145, "scorePanel").setDepth(2);
 
     this.scorePanel.setScale(1.2);
 
@@ -77,7 +77,7 @@ export default class EasyGameScene extends Phaser.Scene {
       color: "#34234d",
     });
 
-    this.scoreText.setOrigin(0.5);
+    this.scoreText.setOrigin(0.5).setDepth(2);
 
     // Timer
     this.timerText = this.add.text(120, 160, `${this.timeLeft}`, {
@@ -87,7 +87,7 @@ export default class EasyGameScene extends Phaser.Scene {
       color: "#34234d",
     });
 
-    this.timerText.setOrigin(0.5);
+    this.timerText.setOrigin(0.5).setDepth(2);
   }
 
   startTimer() {
@@ -199,7 +199,7 @@ export default class EasyGameScene extends Phaser.Scene {
       "missedPanel",
     );
 
-    this.missedPanel.setScale(0.1);
+    this.missedPanel.setScale(0.1).setDepth(2);
 
     this.missedText = this.add.text(
       this.scale.width - 250,
@@ -213,7 +213,7 @@ export default class EasyGameScene extends Phaser.Scene {
       },
     );
 
-    this.missedText.setOrigin(0.5);
+    this.missedText.setOrigin(0.5).setDepth(2);
   }
 
   createLevelText() {
@@ -240,12 +240,12 @@ export default class EasyGameScene extends Phaser.Scene {
 
   createRabbit() {
     this.bunny = this.add.image(
-      this.scale.width / 2 - 250,
+      this.scale.width / 2 - 300,
       this.scale.height - 280,
       "playRabbit",
     );
 
-    this.bunny.setScale(0.2);
+    this.bunny.setScale(0.2).setDepth(2);
 
     this.addRabbitAnimation();
   }
@@ -289,7 +289,7 @@ export default class EasyGameScene extends Phaser.Scene {
   createRaindrops() {
     const drops = this.getLevelDrops();
 
-    drops.slice(0, 4).forEach((drop, index) => {
+    drops.slice(0, 6).forEach((drop, index) => {
       this.createRaindrop(drop, index);
     });
   }
@@ -364,9 +364,9 @@ export default class EasyGameScene extends Phaser.Scene {
 
     dropImage.setScale(0.15);
 
-    const letter = this.add.text(0, 10, dropData.letter, {
-      fontFamily: "Fredoka",
-      fontSize: "72px",
+    const letter = this.add.text(0, 20, dropData.letter, {
+      fontFamily: "Arial Rounded MT Bold, Arial",
+      fontSize: "92px",
       fontStyle: "bold",
       color: "#ffffff",
       stroke: "#1764c0",
@@ -397,7 +397,7 @@ export default class EasyGameScene extends Phaser.Scene {
 
     return {
       x: Phaser.Math.Between(margin, this.scale.width - margin),
-      y: Phaser.Math.Between(-260, -80),
+      y: Phaser.Math.Between(-260, -150),
     };
   }
 

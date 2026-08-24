@@ -16,7 +16,7 @@ export default class PreloaderScene extends Phaser.Scene {
     //-----------------------------------
     // Background
     //-----------------------------------
-    createBackground(this, "preload-bg");
+    createBackground(this, "preload-bg").setAlpha(0.5);
 
     ///////////////logo////////////////////
     const logo = this.add

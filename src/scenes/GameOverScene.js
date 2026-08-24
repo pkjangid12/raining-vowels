@@ -70,8 +70,6 @@ export default class GameOverScene extends Phaser.Scene {
       this.scale.height / 2 - 30,
       "gameOverPopup",
     );
-
-    this.popup.setScale(0.25, 0.25);
   }
 
   // ----------------------------------------
