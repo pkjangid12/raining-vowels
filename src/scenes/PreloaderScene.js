@@ -283,7 +283,7 @@ export default class PreloaderScene extends Phaser.Scene {
       assetPath("Assets/Audio/wrongSelectionSound.mp3"),
     );
     this.load.audio("popSound", assetPath("Assets/Audio/popSound.mp3"));
-    this.load.audio("clockSound", assetPath("/Assets/Audio/clockTicSound.mp3"));
+    this.load.audio("clockSound", assetPath("Assets/Audio/clockTicSound.mp3"));
 
     this.load.audio(
       "starCollectionSound",
